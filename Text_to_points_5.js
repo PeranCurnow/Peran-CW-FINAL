@@ -4,7 +4,7 @@ let feelRadius = 0;
 let myFont;
 
 function preload() {
-  myFont = loadFont('bodoni_72.ttf');
+  myFont = loadFont('Bodoni_72.ttf');
 }
 
 function setup() {  

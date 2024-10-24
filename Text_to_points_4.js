@@ -1,15 +1,33 @@
 let flashThink = false;
 let growFeel = false;
 let feelRadius = 0;
+let myFont;
+
+function preload() {
+  myFont = loadFont('bodoni_72.ttf');
+}
 
 function setup() {  
   createCanvas(windowWidth, windowHeight);  
   textAlign(CENTER, CENTER);  
+  textFont(myFont);
   noStroke();  
 }  
 
 function draw() {   
   background("white");  
+  
+  textSize(75);  
+  
+  // Flash "THINK" randomly on the screen if flashThink is true
+  if (flashThink) {
+    for (let i = 0; i < 10; i++) {
+      let randomX = random(width);
+      let randomY = random(height);
+      fill("black");
+      text("THINK", randomX, randomY);
+    }
+  }
   
   // Draw the gradient ellipse
   let gradient = drawingContext.createRadialGradient(mouseX, mouseY, 0, mouseX, mouseY, 200);   
@@ -18,8 +36,6 @@ function draw() {
   drawingContext.fillStyle = gradient;   
   ellipse(mouseX, mouseY, 400, 400);   
   noStroke();  
-  
-  textSize(75);  
   
   let line1 = "WE THINK TOO MUCH";
   let line2 = "AND FEEL TOO LITTLE";
@@ -38,11 +54,12 @@ function draw() {
     let feelY = y2;
     let feelGradient = drawingContext.createRadialGradient(feelX, feelY, 0, feelX, feelY, feelRadius);   
     feelGradient.addColorStop(0, color("orange"));
-    feelGradient.addColorStop(0.5, color("yellow"));
-    feelGradient.addColorStop(1, color(0, 0, 0, 0));   
+    feelGradient.addColorStop(0.25, color("yellow"));
+    feelGradient.addColorStop(1, color(255, 255, 0, 0)); // Yellow with 0% opacity
+    //feelGradient.addColorStop(1, color(0, 0, 0, 0));   
     drawingContext.fillStyle = feelGradient;   
     ellipse(feelX, feelY, feelRadius, feelRadius);
-    feelRadius += 10; // Increase the radius
+    feelRadius += 5; // Increase the radius
   }
   
   // Draw the first line and check hover states
@@ -79,16 +96,6 @@ function draw() {
     
     text(word, x + wordWidth / 2, y2);
     x += wordWidth + textWidth(" "); // Move to the next word position
-  }
-  
-  // Flash "THINK" randomly on the screen if flashThink is true
-  if (flashThink) {
-    for (let i = 0; i < 10; i++) {
-      let randomX = random(width);
-      let randomY = random(height);
-      fill("black");
-      text("THINK", randomX, randomY);
-    }
   }
 }
 
